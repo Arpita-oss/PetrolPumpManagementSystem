@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>पेट्रोल पम्प का प्रतिदिन का हिसाब</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4 bg-white shadow-lg max-w-2xl">
+        <header class="flex items-center justify-between mb-4">
+            <img src="https://imgs.search.brave.com/5skqK_N2PRuLUlLXBbOIBYzOgkwHpm1vnqCWjoI-LVI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jb21w/YW5pZXNsb2dvLmNv/bS9pbWcvb3JpZy9J/T0MuTlMtMDgxMjA0/YzgucG5nP3Q9MTU5/NjAzMDIzNg" alt="Logo" class="w-20 h-20 object-contain">
+            <div class="text-center">
+                <h1 class="text-xl font-bold">जय श्री राधे</h1>
+                <h2 class="text-lg font-semibold">श्री राधे किसान सेवा केन्द्र ग्राम ढचरी</h2>
+                <p>तह. मुगावली जिला अशोकनगर (म.प्र.)</p>
+            </div>
+            <img src="https://imgs.search.brave.com/5skqK_N2PRuLUlLXBbOIBYzOgkwHpm1vnqCWjoI-LVI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jb21w/YW5pZXNsb2dvLmNv/bS9pbWcvb3JpZy9J/T0MuTlMtMDgxMjA0/YzgucG5nP3Q9MTU5/NjAzMDIzNg" alt="Logo" class="w-20 h-20 object-contain">
+        </header>
+        
+        <h3 class="text-center font-bold mb-4">पेट्रोल पम्प का प्रतिदिन का हिसाब</h3>
+        
+        <form id="pumpForm" class="space-y-4">
+            <div class="flex justify-between">
+                <div class="w-1/2">
+                    <label>डीजल रेट / रीडिंग:</label>
+                    <div class="flex space-x-2">
+                        <input type="text" name="diesel_rate" class="w-1/3 border p-1" placeholder="रेट">
+                        <input type="text" name="diesel_reading_1" class="w-1/3 border p-1" placeholder="रीडिंग 1">
+                        <input type="text" name="diesel_reading_2" class="w-1/3 border p-1" placeholder="रीडिंग 2">
+                    </div>
+                </div>
+                <div class="w-1/2">
+                    <label>पेट्रोल रेट / रीडिंग:</label>
+                    <div class="flex space-x-2">
+                        <input type="text" name="petrol_rate" class="w-1/3 border p-1" placeholder="रेट">
+                        <input type="text" name="petrol_reading_1" class="w-1/3 border p-1" placeholder="रीडिंग 1">
+                        <input type="text" name="petrol_reading_2" class="w-1/3 border p-1" placeholder="रीडिंग 2">
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <label>डीजल बिक्री:</label>
+                <input type="text" name="diesel_sale" class="w-1/4 border p-1"> ली. नगदी रुपए 
+                <input type="text" name="diesel_cash" class="w-1/4 border p-1"> की हुई।
+            </div>
+            
+            <div>
+                <label>पेट्रोल बिक्री:</label>
+                <input type="text" name="petrol_sale" class="w-1/4 border p-1"> ली. नगदी रुपए 
+                <input type="text" name="petrol_cash" class="w-1/4 border p-1"> की हुई।
+            </div>
+            
+            <div>
+                <label>टोटल बिक्री राशि डीजल/पेट्रोल:</label>
+                <input type="text" name="total_sale" class="w-1/2 border p-1"> की हुई।
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label>फ़ोनेपे:</label>
+                    <input type="text" name="phonepe" class="w-full border p-1">
+                </div>
+                <div>
+                    <label>पम्प खर्च:</label>
+                    <input type="text" name="pump_expense" class="w-full border p-1">
+                </div>
+                <div>
+                    <label>उधारी जमा:</label>
+                    <input type="text" name="credit_deposit" class="w-full border p-1">
+                </div>
+                <div>
+                    <label>बैंक जमा:</label>
+                    <input type="text" name="bank_deposit" class="w-full border p-1">
+                </div>
+                <div>
+                    <label>उधारी:</label>
+                    <input type="text" name="credit" class="w-full border p-1">
+                </div>
+                <div>
+                    <label>कैश हैंड:</label>
+                    <input type="text" name="cash_in_hand" class="w-full border p-1">
+                </div>
+            </div>
+            
+            <div>
+                <label>दिनांक:</label>
+                <input type="date" name="date" class="border p-1">
+            </div>
+            
+            <div class="flex justify-between">
+                <button type="button" onclick="submitForm()" class="bg-blue-500 text-white px-4 py-2 rounded">जमा करें (Save)</button>
+                <button type="button" onclick="downloadForm()" class="bg-green-500 text-white px-4 py-2 rounded">डाउनलोड करें (Download)</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+function submitForm() {
+    const formData = new FormData(document.getElementById('pumpForm'));
+    const data = {
+        date: formData.get('date'),
+        diesel_rate: formData.get('diesel_rate'),
+        diesel_reading_1: formData.get('diesel_reading_1'),
+        diesel_reading_2: formData.get('diesel_reading_2'),
+        petrol_rate: formData.get('petrol_rate'),
+        petrol_reading_1: formData.get('petrol_reading_1'),
+        petrol_reading_2: formData.get('petrol_reading_2'),
+        diesel_sale_liters: formData.get('diesel_sale_liters'),
+        diesel_sale_cash: formData.get('diesel_sale_cash'),
+        petrol_sale_liters: formData.get('petrol_sale_liters'),
+        petrol_sale_cash: formData.get('petrol_sale_cash'),
+        total_sale: formData.get('total_sale'),
+        phonepe: formData.get('phonepe'),
+        pump_expense: formData.get('pump_expense'),
+        credit_deposit: formData.get('credit_deposit'),
+        bank_deposit: formData.get('bank_deposit'),
+        credit: formData.get('credit'),
+        cash_in_hand: formData.get('cash_in_hand')
+    };
+    
+    console.log('Submitting data:', data);
+
+    fetch('/submit-pump-data', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.message) {
+            alert('Data saved successfully');
+        } else {
+            alert('Error saving data: ' + (result.error || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error saving data: ' + error);
+    });
+}
+
+function downloadForm() {
+    const formData = new FormData(document.getElementById('pumpForm'));
+    let content = `
+    <!DOCTYPE html>
+    <html lang="hi">
+    <head>
+        <meta charset="UTF-8">
+        <title>पेट्रोल पम्प का प्रतिदिन का हिसाब</title>
+        <style>
+            body { font-family: Arial, sans-serif; }
+            .container { width: 80%; margin: 0 auto; }
+            .header { text-align: center; margin-bottom: 20px; }
+            .form-row { margin-bottom: 10px; }
+            .form-row label { display: inline-block; width: 200px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>जय श्री राधे</h1>
+                <h2>श्री राधे किसान सेवा केन्द्र ग्राम ढचरी</h2>
+                <p>तह. मुगावली जिला अशोकनगर (म.प्र.)</p>
+                <h3>पेट्रोल पम्प का प्रतिदिन का हिसाब</h3>
+            </div>
+            <div class="form-row"><label>डीजल रेट / रीडिंग:</label> ${formData.get('diesel_rate')} / ${formData.get('diesel_reading_1')} / ${formData.get('diesel_reading_2')}</div>
+            <div class="form-row"><label>पेट्रोल रेट / रीडिंग:</label> ${formData.get('petrol_rate')} / ${formData.get('petrol_reading_1')} / ${formData.get('petrol_reading_2')}</div>
+            <div class="form-row"><label>डीजल बिक्री:</label> ${formData.get('diesel_sale_liters')} ली. नगदी रुपए ${formData.get('diesel_sale_cash')} की हुई।</div>
+            <div class="form-row"><label>पेट्रोल बिक्री:</label> ${formData.get('petrol_sale_liters')} ली. नगदी रुपए ${formData.get('petrol_sale_cash')} की हुई।</div>
+            <div class="form-row"><label>टोटल बिक्री राशि डीजल/पेट्रोल:</label> ${formData.get('total_sale')} की हुई।</div>
+            <div class="form-row"><label>फ़ोनेपे:</label> ${formData.get('phonepe')}</div>
+            <div class="form-row"><label>पम्प खर्च:</label> ${formData.get('pump_expense')}</div>
+            <div class="form-row"><label>उधारी जमा:</label> ${formData.get('credit_deposit')}</div>
+            <div class="form-row"><label>बैंक जमा:</label> ${formData.get('bank_deposit')}</div>
+            <div class="form-row"><label>उधारी:</label> ${formData.get('credit')}</div>
+            <div class="form-row"><label>कैश हैंड:</label> ${formData.get('cash_in_hand')}</div>
+            <div class="form-row"><label>दिनांक:</label> ${formData.get('date')}</div>
+        </div>
+    </body>
+    </html>
+    `;
+
+    const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'पेट्रोल_पम्प_हिसाब.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+</script>
+    </script>
+</body>
+</html>
