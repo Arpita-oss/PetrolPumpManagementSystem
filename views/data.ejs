@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>पेट्रोल पम्प का प्रतिदिन का हिसाब</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Form Section -->
+            <div class="bg-white shadow-lg p-6 rounded-lg">
+                <h2 class="text-2xl font-bold mb-4">नया हिसाब जोड़ें</h2>
+                <form id="pumpForm" action="/submit-pump-data" method="post">
+                    <!-- Your existing form fields here -->
+                    <!-- ... -->
+                     <a href="/home">
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">जमा करें (Save)</button>
+                     </a>
+                    
+                </form>
+            </div>
+
+            <!-- Submitted Data Section -->
+            <div class="bg-white shadow-lg p-6 rounded-lg">
+                <h2 class="text-2xl font-bold mb-4">पिछला हिसाब</h2>
+                <% if (submittedData && submittedData.length > 0) { %>
+                    <div id="dataContainer" class="space-y-4">
+                        <!-- Data will be populated here by JavaScript -->
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <button id="prevButton" class="bg-gray-300 text-gray-700 px-4 py-2 rounded" disabled>पिछला</button>
+                        <span id="pageInfo" class="py-2"></span>
+                        <button id="nextButton" class="bg-gray-300 text-gray-700 px-4 py-2 rounded">अगला</button>
+                    </div>
+                <% } else { %>
+                    <p>कोई पिछला हिसाब नहीं मिला।</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.submittedData = <%-JSON.stringify(submittedData)%>;
+    </script>
+    
+    <script>
+        (function() {
+            const submittedData = window.submittedData;
+            const itemsPerPage = 5;
+            let currentPage = 1;
+    
+            function displayData(page) {
+                const startIndex = (page - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const pageData = submittedData.slice(startIndex, endIndex);
+    
+                const container = document.getElementById('dataContainer');
+                container.innerHTML = '';
+    
+                pageData.forEach(data => {
+                    const div = document.createElement('div');
+                    div.className = 'border p-4 rounded';
+                    div.innerHTML = `
+                        <p><strong>दिनांक:</strong> ${new Date(data.date).toLocaleDateString()}</p>
+                        <p><strong>डीजल बिक्री:</strong> ${data.diesel_sale.liters} ली. (₹${data.diesel_sale.cash})</p>
+                        <p><strong>पेट्रोल बिक्री:</strong> ${data.petrol_sale.liters} ली. (₹${data.petrol_sale.cash})</p>
+                        <p><strong>कुल बिक्री:</strong> ₹${data.total_sale}</p>
+                        <p><strong>फ़ोनपे:</strong> ₹${data.phonepe}</p>
+                        <p><strong>पम्प खर्च:</strong> ₹${data.pump_expense}</p>
+                        <p><strong>कैश हैंड:</strong> ₹${data.cash_in_hand}</p>
+                    `;
+                    container.appendChild(div);
+                });
+    
+                updatePaginationControls();
+            }
+    
+            function updatePaginationControls() {
+                const totalPages = Math.ceil(submittedData.length / itemsPerPage);
+                document.getElementById('prevButton').disabled = currentPage === 1;
+                document.getElementById('nextButton').disabled = currentPage === totalPages;
+                document.getElementById('pageInfo').textContent = `पेज ${currentPage} / ${totalPages}`;
+            }
+    
+            document.getElementById('prevButton').addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayData(currentPage);
+                }
+            });
+    
+            document.getElementById('nextButton').addEventListener('click', () => {
+                const totalPages = Math.ceil(submittedData.length / itemsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayData(currentPage);
+                }
+            });
+    
+            // Initial display
+            displayData(currentPage);
+        })();
+    </script>
+</body>
+</html>

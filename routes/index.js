@@ -3,7 +3,7 @@ var router = express.Router();
 const passport = require("passport")
 const user = require('./users')
 const localStrategy = require("passport-local")
-const PetrolPumpData = require("./form")
+const PetrolPumpData = require("./petrolpumpData")
 
 
 passport.use(new localStrategy(user.authenticate()))
@@ -14,7 +14,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get("/login", function (req, res) {
-  res.render("home");
+  res.render("login");
 })
 
 router.get("/home", function (req, res) {
@@ -26,6 +26,21 @@ router.get("/register", function (req, res) {
   res.render("login");
 })
 
+
+
+router.get("/submit-pump-data", async function (req, res) {
+    try {
+        // Fetch all submitted entries, sorted by date descending
+        const submittedData = await PetrolPumpData.find({})
+            .sort({ date: -1 })
+            .exec();
+
+        res.render("data", { submittedData: submittedData });
+    } catch (error) {
+        console.error("Error fetching submitted data:", error);
+        res.render("data", { submittedData: [], error: "Error fetching data" });
+    }
+});
 router.post('/register', (req, res, next) => {
 var newUser = {
 username: req.body.username,
@@ -72,9 +87,9 @@ else res.redirect('/login');
 
 
 router.post('/submit-pump-data',isloggedIn, async (req, res) => {
-  if (!req.isAuthenticated()) {
-    return res.status(401).json({ error: 'Not authenticated' });
-  }
+  // if (!req.isAuthenticated()) {
+  //   return res.status(401).json({ error: 'Not authenticated' });
+  // }
 
   try {
     const newData = new PetrolPumpData({
@@ -104,7 +119,7 @@ router.post('/submit-pump-data',isloggedIn, async (req, res) => {
     });
 
     await newData.save();
-    res.status(200).json({ message: 'Data saved successfully' });
+    res.redirect('/submit-pump-data')
   } catch (error) {
     console.error('Error saving data:', error);
     res.status(500).json({ error: 'Error saving data', details: error.message });
