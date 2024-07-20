@@ -71,10 +71,10 @@
                 </div>
                 <div class="col-span-2">
                     <label class="block mb-2">उधारी जमा:</label>
-                    <div id="creditDepositContainer" class="space-y-2">
+                    <div id="creditDepositsContainer" class="space-y-2">
                         <div class="credit-deposit-entry flex space-x-2">
-                            <input type="text" name="credit_deposit_name[]" class="w-1/2 border p-1" placeholder="नाम">
-                            <input type="text" name="credit_deposit_amount[]" class="w-1/3 border p-1" placeholder="राशि">
+                            <input type="text" name="credit_deposit_name" class="w-1/2 border p-1" placeholder="नाम">
+                            <input type="text" name="credit_deposit_amount" class="w-1/3 border p-1" placeholder="राशि">
                             <button type="button" class="remove-entry bg-red-500 text-white px-2 py-1 rounded text-xs">हटाएं</button>
                         </div>
                     </div>
@@ -83,10 +83,10 @@
                
                 <div class="col-span-2">
                     <label class="block mb-2">उधारी:</label>
-                    <div id="creditContainer" class="space-y-2">
+                    <div id="creditsContainer" class="space-y-2">
                         <div class="credit-entry flex space-x-2">
-                            <input type="text" name="credit_name[]" class="w-1/2 border p-1" placeholder="नाम">
-                            <input type="text" name="credit_amount[]" class="w-1/3 border p-1" placeholder="राशि">
+                            <input type="text" name="credit_name" class="w-1/2 border p-1" placeholder="नाम">
+                            <input type="text" name="credit_amount" class="w-1/3 border p-1" placeholder="राशि">
                             <button type="button" class="remove-credit-entry bg-red-500 text-white px-2 py-1 rounded text-xs">हटाएं</button>
                         </div>
                     </div>
@@ -122,60 +122,43 @@
     </div>
 
     <script>
-            //adding column for udhari jma
-        document.getElementById('addCreditDeposit').addEventListener('click', function() {
-        const container = document.getElementById('creditDepositContainer');
-        const newEntry = document.createElement('div');
-        newEntry.className = 'credit-deposit-entry flex space-x-2 mt-2';
-        newEntry.innerHTML = `
-            <input type="text" name="credit_deposit_name[]" class="w-1/2 border p-1" placeholder="नाम">
-            <input type="text" name="credit_deposit_amount[]" class="w-1/3 border p-1" placeholder="राशि">
-            <button type="button" class="remove-entry bg-red-500 text-white px-2 py-1 rounded text-xs">हटाएं</button>
-        `;
-        container.appendChild(newEntry);
-        
-        newEntry.querySelector('.remove-entry').addEventListener('click', function() {
-            container.removeChild(newEntry);
-        });
+  function addEntry(containerId, nameAttr, amountAttr, removeClass) {
+    const container = document.getElementById(containerId);
+    const newEntry = document.createElement('div');
+    newEntry.className = 'credit-entry flex space-x-2 mt-2';
+    newEntry.innerHTML = `
+        <input type="text" name="${nameAttr}" class="w-1/2 border p-1" placeholder="नाम">
+        <input type="text" name="${amountAttr}" class="w-1/3 border p-1" placeholder="राशि">
+        <button type="button" class="${removeClass} bg-red-500 text-white px-2 py-1 rounded text-xs">हटाएं</button>
+    `;
+    container.appendChild(newEntry);
+    
+    newEntry.querySelector(`.${removeClass}`).addEventListener('click', function() {
+        container.removeChild(newEntry);
     });
+}
 
-    // Add event listener for initial remove button
-    document.querySelector('.remove-entry').addEventListener('click', function() {
-        this.closest('.credit-deposit-entry').remove();
-    });
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-    // Function to add new entry
-    function addEntry(containerId, nameAttr, amountAttr, removeClass) {
-        const container = document.getElementById(containerId);
-        const newEntry = document.createElement('div');
-        newEntry.className = 'credit-entry flex space-x-2 mt-2';
-        newEntry.innerHTML = `
-            <input type="text" name="${nameAttr}[]" class="w-1/2 border p-1" placeholder="नाम">
-            <input type="text" name="${amountAttr}[]" class="w-1/3 border p-1" placeholder="राशि">
-            <button type="button" class="${removeClass} bg-red-500 text-white px-2 py-1 rounded text-xs">हटाएं</button>
-        `;
-        container.appendChild(newEntry);
-        
-        newEntry.querySelector(`.${removeClass}`).addEventListener('click', function() {
-            container.removeChild(newEntry);
+document.addEventListener('DOMContentLoaded', function() {
+    // Add event listener for "उधारी जमा" (Credit Deposit)
+    const addCreditDepositButton = document.getElementById('addCreditDeposit');
+    if (addCreditDepositButton) {
+        addCreditDepositButton.addEventListener('click', function() {
+            addEntry('creditDepositsContainer', 'credit_deposit_name', 'credit_deposit_amount', 'remove-entry');
         });
     }
 
-   
     // Add event listener for "उधारी" (Credit)
     const addCreditButton = document.getElementById('addCredit');
     if (addCreditButton) {
         addCreditButton.addEventListener('click', function() {
-            addEntry('creditContainer', 'credit_name', 'credit_amount', 'remove-credit-entry');
+            addEntry('creditsContainer', 'credit_name', 'credit_amount', 'remove-credit-entry');
         });
     }
 
     // Add event listeners for initial remove buttons
     document.querySelectorAll('.remove-entry, .remove-credit-entry').forEach(button => {
         button.addEventListener('click', function() {
-            this.closest('.credit-entry').remove();
+            this.closest('.credit-entry, .credit-deposit-entry').remove();
         });
     });
 });
@@ -242,17 +225,17 @@ function downloadForm() {
                 <div class="form-row"><label>पम्प खर्च:</label> ${formData.get('pump_expense')}</div>
                   <div class="col-span-2">
             <label class="block mb-2 font-bold">उधारी जमा:</label>
-            ${Array.from(formData.getAll('credit_deposit_name[]')).map((name, index) => `
+            ${Array.from(formData.getAll('credit_deposit_name')).map((name, index) => `
                 <div class="form-row">
-                    <span>${name}: ${formData.getAll('credit_deposit_amount[]')[index]}</span>
+                    <span>${name}: ${formData.getAll('credit_deposit_amount')[index]}</span>
                 </div>
             `).join('')}
         </div>
         <div class="col-span-2">
             <label class="block mb-2 font-bold">उधारी:</label>
-            ${Array.from(formData.getAll('credit_name[]')).map((name, index) => `
+            ${Array.from(formData.getAll('credit_name')).map((name, index) => `
                 <div class="form-row">
-                    <span>${name}: ${formData.getAll('credit_amount[]')[index]}</span>
+                    <span>${name}: ${formData.getAll('credit_amount')[index]}</span>
                 </div>
             `).join('')}
         </div>
