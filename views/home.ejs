@@ -74,8 +74,8 @@
                     <label class="block mb-2">उधारी जमा:</label>
                     <div id="creditDepositsContainer" class="space-y-2">
                         <div class="credit-deposit-entry flex space-x-2">
-                            <input type="text" name="credit_deposit_name[]" class="w-1/2 border p-1" placeholder="नाम">
-                            <input type="text" name="credit_deposit_amount[]" class="w-1/3 border p-1" placeholder="राशि">
+                            <input type="text" name="credit_deposit_name" class="w-1/2 border p-1" placeholder="नाम">
+                            <input type="text" name="credit_deposit_amount" class="w-1/3 border p-1" placeholder="राशि">
                             <button type="button" class="remove-entry bg-red-500 text-white px-2 py-1 rounded text-xs">हटाएं</button>
                         </div>
                     </div>
@@ -86,8 +86,8 @@
                     <label class="block mb-2">उधारी:</label>
                     <div id="creditsContainer" class="space-y-2">
                         <div class="credit-entry flex space-x-2">
-                            <input type="text" name="credit_name[]" class="w-1/2 border p-1" placeholder="नाम">
-                            <input type="text" name="credit_amount[]" class="w-1/3 border p-1" placeholder="राशि">
+                            <input type="text" name="credit_name" class="w-1/2 border p-1" placeholder="नाम">
+                            <input type="text" name="credit_amount" class="w-1/3 border p-1" placeholder="राशि">
                             <button type="button" class="remove-credit-entry bg-red-500 text-white px-2 py-1 rounded text-xs">हटाएं</button>
                         </div>
                     </div>
@@ -128,8 +128,13 @@
     const newEntry = document.createElement('div');
     newEntry.className = 'credit-entry flex space-x-2 mt-2';
     newEntry.innerHTML = `
+<<<<<<< HEAD
         <input type="text" name="${nameAttr}[]" class="w-1/2 border p-1" placeholder="नाम">
         <input type="text" name="${amountAttr}[]" class="w-1/3 border p-1" placeholder="राशि">
+=======
+        <input type="text" name="${nameAttr}" class="w-1/2 border p-1" placeholder="नाम">
+        <input type="text" name="${amountAttr}" class="w-1/3 border p-1" placeholder="राशि">
+>>>>>>> fa92e415b82bf0e03fc3f8077f184f8d1b8a410e
         <button type="button" class="${removeClass} bg-red-500 text-white px-2 py-1 rounded text-xs">हटाएं</button>
     `;
     container.appendChild(newEntry);
@@ -226,17 +231,17 @@ function downloadForm() {
                 <div class="form-row"><label>पम्प खर्च:</label> ${formData.get('pump_expense')}</div>
                   <div class="col-span-2">
             <label class="block mb-2 font-bold">उधारी जमा:</label>
-            ${Array.from(formData.getAll('credit_deposit_name[]')).map((name, index) => `
+            ${Array.from(formData.getAll('credit_deposit_name')).map((name, index) => `
                 <div class="form-row">
-                    <span>${name}: ${formData.getAll('credit_deposit_amount[]')[index]}</span>
+                    <span>${name}: ${formData.getAll('credit_deposit_amount')[index]}</span>
                 </div>
             `).join('')}
         </div>
         <div class="col-span-2">
             <label class="block mb-2 font-bold">उधारी:</label>
-            ${Array.from(formData.getAll('credit_name[]')).map((name, index) => `
+            ${Array.from(formData.getAll('credit_name')).map((name, index) => `
                 <div class="form-row">
-                    <span>${name}: ${formData.getAll('credit_amount[]')[index]}</span>
+                    <span>${name}: ${formData.getAll('credit_amount')[index]}</span>
                 </div>
             `).join('')}
         </div>

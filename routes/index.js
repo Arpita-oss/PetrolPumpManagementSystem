@@ -79,11 +79,38 @@ function isloggedIn(req, res, next) {
 }
 
 router.post('/submit-pump-data', isloggedIn, async (req, res) => {
+  console.log(req.body);
+  const ensureArray = value => Array.isArray(value) ? value : [value];
+
   try {
     // Parse credit deposits and credits from JSON strings
+<<<<<<< HEAD
     const creditDeposits = JSON.parse(req.body.credit_deposits || '[]');
     const credits = JSON.parse(req.body.credits || '[]');
     console.log(req.body);
+=======
+    let credit_deposit_name = ensureArray(req.body.credit_deposit_name);
+    let credit_deposit_amount = ensureArray(req.body.credit_deposit_amount);
+
+    let credit_name = ensureArray(req.body.credit_name);
+    let credit_amount = ensureArray(req.body.credit_amount);
+
+    const creditDeposits = credit_deposit_name.map((name, index) => {
+      return {
+        name: name,
+        amount: credit_deposit_amount[index]
+      };
+    });
+
+    const credits = credit_name.map((name, index) => {
+      return {
+        name: name,
+        amount: credit_amount[index]
+      };
+    });
+    // const credits = Array.isArray(req.body.credit_name) ? req.body.credit_name.map((data,idx)=> console.log({name:data,amount:req.body.credit_deposit_amount})) : {name:req.body.credit_name, amount:req.body.credit_deposit_amount}
+    // const credits = 
+>>>>>>> fa92e415b82bf0e03fc3f8077f184f8d1b8a410e
     const newData = new PetrolPumpData({
       user: req.user._id,
       date: new Date(req.body.date),

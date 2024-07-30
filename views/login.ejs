@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
+<<<<<<< HEAD
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,4 +46,28 @@
         </div>
     </div>
 </body>
+=======
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="h-full m-0 p-0">
+    <div class="w-full h-full bg-zinc-900 text-white flex items-center justify-center">
+      <div class="w-full max-w-md px-6 py-8">
+        <div class="flex flex-col items-center gap-8">
+          <img class="w-1/2 max-w-xs" src="/images/logo.png" alt="Logo">
+          <form class="w-full" action="/login" method="post">
+            <input class="w-full px-4 py-3 mb-4 bg-zinc-800 border border-zinc-700 rounded-md text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500" type="text" placeholder="Username" name="username" required>
+            <input class="w-full px-4 py-3 mb-6 bg-zinc-800 border border-zinc-700 rounded-md text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500" type="password" placeholder="Password" name="password" autocomplete="current-password" required>
+            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md transition duration-300" type="submit">Log In</button>
+          </form>
+          <p class="text-zinc-400">Don't have an account? <a href="/" class="text-blue-500 hover:text-blue-400">Sign Up</a></p>
+        </div>
+      </div>
+    </div>
+  </body>
+>>>>>>> fa92e415b82bf0e03fc3f8077f184f8d1b8a410e
 </html>
