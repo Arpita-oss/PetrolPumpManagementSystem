@@ -1,22 +1,48 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Login Page</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Oil Petrol Management System - Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-  </head>
-  <body>
-    <div class="w-full min-h-screen bg-zinc-900 text-white py-5 flex flex-col items-center justify-center">
-      <div class="flex flex-col items-center gap-5 px-4">
-        <img class="w-1/2" src="/images/logo.png" alt="">
-        <form class="w-full" action="/login" method="post"> <!-- Provide a valid URL or use action="#" -->
-          <input class="px-3 mt-2 py-2 border-2 border-zinc-800 rounded-md block w-full bg-zinc-900" type="text" placeholder="username" name="username">
-          <input class="px-3 mt-2 py-2 border-2 border-zinc-800 rounded-md block w-full bg-zinc-900" type="password" placeholder="password" name="password" autocomplete="current-password">
-          <input class="w-full bg-blue-500 px-3 py-3 rounded-md mt-2" type="submit" value="Log In">
-        </form>
-        <span>Don't have an account? <a href="/" class="text-blue-500">Sign Up</a></span>
-      </div>
+    <link rel="shortcut icon" href="https://imgs.search.brave.com/Lq05mZoxmsMJEzIrYdidggrvsGvytwYGMrN-4ypFX2Q/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMud2lraWEubm9j/b29raWUubmV0L2xv/Z29wZWRpYS9pbWFn/ZXMvOC84Yi9JbmRp/YW5fT2lsX0NvcnBv/cmF0aW9uX0xvZ28u/c3ZnL3JldmlzaW9u/L2xhdGVzdC9zY2Fs/ZS10by13aWR0aC1k/b3duLzIwMD9jYj0y/MDIxMTAwMjE1MTM0/NQ" type="image/x-icon">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'iocl-orange': '#FF7000',
+                        'iocl-blue': '#00529F',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="h-full m-0 p-0 bg-gradient-to-br from-iocl-blue to-blue-900 text-white">
+    <div class="w-full h-full flex items-center justify-center">
+        <div class="w-full max-w-md px-8 py-10 bg-white bg-opacity-10 rounded-xl shadow-2xl backdrop-blur-sm">
+            <div class="flex flex-col items-center gap-8">
+                <img src="https://imgs.search.brave.com/Lq05mZoxmsMJEzIrYdidggrvsGvytwYGMrN-4ypFX2Q/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMud2lraWEubm9j/b29raWUubmV0L2xv/Z29wZWRpYS9pbWFn/ZXMvOC84Yi9JbmRp/YW5fT2lsX0NvcnBv/cmF0aW9uX0xvZ28u/c3ZnL3JldmlzaW9u/L2xhdGVzdC9zY2Fs/ZS10by13aWR0aC1k/b3duLzIwMD9jYj0y/MDIxMTAwMjE1MTM0/NQ" alt="Indian Oil Logo" class="w-59 h-auto">
+                <h2 class="text-2xl font-semibold text-center text-white">Petrol Management System</h2>
+                <form class="w-full space-y-6" action="/login" method="post">
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-300">Username</label>
+                        <input id="username" name="username" type="text" required class="mt-1 block w-full px-4 py-3 bg-white bg-opacity-20 border border-gray-300 rounded-md text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-iocl-orange focus:border-iocl-orange" placeholder="Username">
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required class="mt-1 block w-full px-4 py-3 bg-white bg-opacity-20 border border-gray-300 rounded-md text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-iocl-orange focus:border-iocl-orange" placeholder="Password">
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-iocl-orange hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-iocl-orange transition duration-300">
+                            Log In
+                        </button>
+                    </div>
+                </form>
+                <p class="text-sm text-gray-300">Don't have an account? <a href="/" class="font-medium text-iocl-orange hover:text-orange-400">Sign Up</a></p>
+            </div>
+        </div>
     </div>
-      </body>
+</body>
 </html>

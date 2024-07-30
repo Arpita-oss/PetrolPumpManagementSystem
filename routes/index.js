@@ -80,36 +80,19 @@ function isloggedIn(req, res, next) {
 
 router.post('/submit-pump-data', isloggedIn, async (req, res) => {
   try {
-    // Process credit deposits
-    const creditDeposits = [];
-    if (Array.isArray(req.body.credit_deposit_name) && Array.isArray(req.body.credit_deposit_amount)) {
-      for (let i = 0; i <req.body.credit_deposit_name.length; i++) {
-        creditDeposits.push({
-          name: req.body.credit_deposit_name[i],
-          amount: parseFloat(req.body.credit_deposit_amount[i])
-        });
-      }
-    }
-
-    const credits = [];
-    if (Array.isArray(req.body.credit_name) && Array.isArray(req.body.credit_amount)) {
-      for (let i = 0; i < req.body.credit_name.length; i++) {
-        credits.push({
-          name: req.body.credit_name[i],
-          amount: parseFloat(req.body.credit_amount[i])
-        });
-      }
-    }
-
+    // Parse credit deposits and credits from JSON strings
+    const creditDeposits = JSON.parse(req.body.credit_deposits || '[]');
+    const credits = JSON.parse(req.body.credits || '[]');
+    console.log(req.body);
     const newData = new PetrolPumpData({
       user: req.user._id,
       date: new Date(req.body.date),
-      diesel_rate: req.body.diesel_rate,
-      diesel_reading_1: req.body.diesel_reading_1,
-      diesel_reading_2: req.body.diesel_reading_2,
-      petrol_rate: req.body.petrol_rate,
-      petrol_reading_1: req.body.petrol_reading_1,
-      petrol_reading_2: req.body.petrol_reading_2,
+      diesel_rate: parseFloat(req.body.diesel_rate),
+      diesel_reading_1: parseFloat(req.body.diesel_reading_1),
+      diesel_reading_2: parseFloat(req.body.diesel_reading_2),
+      petrol_rate: parseFloat(req.body.petrol_rate),
+      petrol_reading_1: parseFloat(req.body.petrol_reading_1),
+      petrol_reading_2: parseFloat(req.body.petrol_reading_2),
       diesel_sale: {
         liters: parseFloat(req.body.diesel_sale_liters),
         cash: parseFloat(req.body.diesel_sale_cash)
@@ -122,8 +105,8 @@ router.post('/submit-pump-data', isloggedIn, async (req, res) => {
       phonepe: parseFloat(req.body.phonepe),
       pump_expense: parseFloat(req.body.pump_expense),
       credit_deposits: creditDeposits,
-      bank_deposit: parseFloat(req.body.bank_deposit),
       credits: credits,
+      bank_deposit: parseFloat(req.body.bank_deposit),
       cash_in_hand: parseFloat(req.body.cash_in_hand)
     });
 
@@ -134,5 +117,4 @@ router.post('/submit-pump-data', isloggedIn, async (req, res) => {
     res.status(500).json({ error: 'Error saving data', details: error.message });
   }
 });
-
 module.exports = router;

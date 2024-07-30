@@ -1,14 +1,5 @@
 const mongoose = require("mongoose");
 
-const creditDepositSchema = new mongoose.Schema({
-  name: String,
-  amount: Number
-});
-
-const creditSchema = new mongoose.Schema({
-  name: String,
-  amount: Number
-});
 
 const petrolPumpSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
@@ -30,8 +21,14 @@ const petrolPumpSchema = new mongoose.Schema({
   total_sale: Number,
   phonepe: Number,
   pump_expense: Number,
-  credit_deposits: [creditDepositSchema],
-  credits: [creditSchema],  // New field for multiple credit entries
+  credit_deposits: [{
+    name: String,
+    amount: Number
+  }],
+  credits: [{
+    name: String,
+    amount: Number
+  }], // New field for multiple credit entries
   bank_deposit: Number,
   cash_in_hand: Number
 });
