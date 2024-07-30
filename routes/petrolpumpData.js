@@ -21,11 +21,10 @@ const petrolPumpSchema = new mongoose.Schema({
   total_sale: Number,
   phonepe: Number,
   pump_expense: Number,
-<<<<<<< HEAD
-  credit_deposits: [{
-=======
+
+
   credit_deposits: [{ 
->>>>>>> fa92e415b82bf0e03fc3f8077f184f8d1b8a410e
+
     name: String,
     amount: Number
   }],
