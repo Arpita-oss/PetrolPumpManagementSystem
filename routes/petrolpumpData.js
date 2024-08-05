@@ -21,7 +21,10 @@ const petrolPumpSchema = new mongoose.Schema({
   total_sale: Number,
   phonepe: Number,
   pump_expense: Number,
+
+
   credit_deposits: [{ 
+
     name: String,
     amount: Number
   }],

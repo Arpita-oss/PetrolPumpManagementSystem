@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>पेट्रोल पम्प का प्रतिदिन का हिसाब</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="https://imgs.search.brave.com/Lq05mZoxmsMJEzIrYdidggrvsGvytwYGMrN-4ypFX2Q/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMud2lraWEubm9j/b29raWUubmV0L2xv/Z29wZWRpYS9pbWFn/ZXMvOC84Yi9JbmRp/YW5fT2lsX0NvcnBv/cmF0aW9uX0xvZ28u/c3ZnL3JldmlzaW9u/L2xhdGVzdC9zY2Fs/ZS10by13aWR0aC1k/b3duLzIwMD9jYj0y/MDIxMTAwMjE1MTM0/NQ" type="image/x-icon">
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-4 bg-white shadow-lg max-w-2xl">
@@ -127,8 +128,13 @@
     const newEntry = document.createElement('div');
     newEntry.className = 'credit-entry flex space-x-2 mt-2';
     newEntry.innerHTML = `
+<<<<<<< HEAD
+        <input type="text" name="${nameAttr}[]" class="w-1/2 border p-1" placeholder="नाम">
+        <input type="text" name="${amountAttr}[]" class="w-1/3 border p-1" placeholder="राशि">
+=======
         <input type="text" name="${nameAttr}" class="w-1/2 border p-1" placeholder="नाम">
         <input type="text" name="${amountAttr}" class="w-1/3 border p-1" placeholder="राशि">
+>>>>>>> fa92e415b82bf0e03fc3f8077f184f8d1b8a410e
         <button type="button" class="${removeClass} bg-red-500 text-white px-2 py-1 rounded text-xs">हटाएं</button>
     `;
     container.appendChild(newEntry);
