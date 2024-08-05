@@ -53,9 +53,7 @@ router.post('/register', (req, res, next) => {
     });
 });
 
-router.post(
-  '/login',
-  passport.authenticate('local', {
+router.post('/login', passport.authenticate('local', {
     successRedirect: '/home',
     failureRedirect: '/login',
   }),
