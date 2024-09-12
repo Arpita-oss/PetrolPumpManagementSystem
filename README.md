@@ -1,4 +1,4 @@
-# ⛽️ petrolpump 
+# ⛽️ PetrolPumpManagementSystem
 
 A simple and intuitive web application for managing petrol pump operations.
 
